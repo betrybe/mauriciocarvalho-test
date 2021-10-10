@@ -11,16 +11,16 @@ const trim = require('../../middlewares/trim');
 //Middleware responsável retornar os erros 
 const errors = require('../../middlewares/errors');
 //Middleware responsável por verificar o json schema 
-const usersSchema = require('../../middlewares/usersSchema');
+const usersSchema = require('../../middlewares/recipesSchema');
 //Middleware responsável por verificar o json schema 
-const checkRegister = require('../../middlewares/checkUserRegister');
+const checkUserRegister = require('../../middlewares/checkUserRegister');
 
 
 //1 - Crie um endpoint para o cadastro de usuários
 router.post('/users',
     trim,
     usersSchema, 
-    checkRegister, 
+    checkUserRegister, 
     userController.register, 
     errors);
 

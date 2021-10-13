@@ -1,11 +1,13 @@
 const express = require('express');
-const routerRegister = require('./routes/users/register');
-const routerLogin = require('./routes/auth/login');
+const userRouters = require('./routes/users');
+const authRouter = require('./routes/auth');
+const recipeRouter = require('./routes/recipes');
 const app = express();
 app.use(express.json());
 
-app.use(routerRegister)
-app.use(routerLogin)
+app.use(userRouters)
+app.use(authRouter)
+app.use(recipeRouter)
 
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {

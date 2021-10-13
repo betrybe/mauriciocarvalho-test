@@ -17,6 +17,7 @@ const login = async (req, res) => {
                 email: email,
                 role: role
             }
+
     
             const token = jwt.sign(payload, "BeTrybe", {
                 expiresIn: 30000

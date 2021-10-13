@@ -1,0 +1,140 @@
+{
+    "server": "http://localhost:3000/",
+    "users": {
+        "user": {
+            "name": "Erick Jacquin",
+            "email": "erickjacquin@gmail.com",
+            "password": "12345678"
+        },
+        "admin": {
+            "name": "admin",
+            "email": "root@email.com",
+            "password": "admin",
+            "role": "admin"
+        },
+        "register": {
+            "end-point": "users/",
+            "describe": {
+                "description": "1 - Crie um endpoint para o cadastro de usuários",
+                "it1": {
+                    "it": "Será validado que o campo 'name' é obrigatório",
+                    "response": "Invalid entries. Try again.",
+                    "json": {
+                        "email": "erickjacquin@gmail.com",
+                        "password": "12345678"
+                    }
+                },
+                "it2": {
+                    "it": "Será validado que o campo 'email' é obrigatório",
+                    "response": "Invalid entries. Try again.",
+                    "json": {
+                        "name": "Erick Jacquin",
+                        "password": "12345678"
+                    }
+                },
+                "it3": {
+                    "it": "Será validado que não é possível cadastrar usuário com o campo email inválido",
+                    "response": "Invalid entries. Try again.",
+                    "json": {
+                        "name": "Erick Jacquin",
+                        "email": "erickjaquin",
+                        "password": "12345678"
+                    }
+                },
+                "it4": {
+                    "it": "Será validado que o campo 'senha' é obrigatório",
+                    "response": "Invalid entries. Try again.",
+                    "json": {
+                        "name": "Erick Jacquin",
+                        "email": "erickjacquin@gmail.com"
+                    }
+                },
+                "it5": {
+                    "it": "Será validado que o campo 'email' é único",
+                    "response": "Email already registered",
+                    "json": {
+                        "name": "Erick Jacquin",
+                        "email": "erickjacquin@gmail.com",
+                        "password": "12345678"
+                    }
+                },
+                "it6": {
+                    "it": "Será validado que é possível cadastrar usuário com sucesso",
+                    "response": {
+                        "user": {
+                            "name": "Erick Jacquin",
+                            "email": "erickjacquin@gmail.com",
+                            "role": "user",
+                            "_id": "..."
+                        }
+                    },
+                    "json": {
+                        "name": "Erick Jacquin",
+                        "email": "erickjacquin@gmail.com",
+                        "password": "12345678"
+                    }
+                },
+                "it7": {
+                    "it": "Será validado que é possível ao cadastrar usuário, o valor do campo 'role' tenha o valor 'user'",
+                    "response": {
+                        "user": {
+                            "name": "Erick Jacquin",
+                            "email": "erickjacquin@gmail.com",
+                            "role": "user",
+                            "_id": "..."
+                        }
+                    },
+                    "json": {
+                        "name": "Erick Jacquin",
+                        "email": "erickjacquin@gmail.com",
+                        "password": "12345678"
+                    }
+                }
+            }
+        },
+        "login": {
+            "end-point": "login/",
+            "describe": {
+                "description": "2 - Crie um endpoint para o login de usuários",
+                "it1": {
+                    "it": "Será validado que o campo 'email' é obrigatório",
+                    "response": "All fields must be filled",
+                    "json": {
+                        "password": "12345678"
+                    }
+                },
+                "it2": {
+                    "it": "Será validado que o campo 'password' é obrigatório",
+                    "response": "All fields must be filled",
+                    "json": {
+                        "email": "erickjacquin@gmail.com"
+                    }
+                },
+                "it3": {
+                    "it": "Será validado que não é possível fazer login com um email inválido",
+                    "response": "Incorrect username or password",
+                    "json": {
+                        "email": "erickjaquin@3.com",
+                        "password": "12345678"
+                    }
+                },
+                "it4": {
+                    "it": "Será validado que não é possível fazer login com uma senha inválida",
+                    "response": "Incorrect username or password",
+                    "json": {
+                        "email": "erickjacquin@gmail.com",
+                        "password": "123456"
+                    }
+                },
+                "it5": {
+                    "it": "Será validado que é possível fazer login com sucesso",
+                    "response": "Incorrect username or password",
+                    "json": {
+                        "email": "erickjacquin@gmail.com",
+                        "password": "12345678"
+                    }
+                }
+            }
+        }
+    }
+}

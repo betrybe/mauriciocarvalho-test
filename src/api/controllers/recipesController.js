@@ -1,7 +1,5 @@
 const path = require('path');
 
-const Recipe = require('../models/recipes');
-
 const User = require('../models/users');
 
 const recipeRepository = require('../repositories/recipeRepository');

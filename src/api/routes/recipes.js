@@ -29,9 +29,6 @@ const checkSession = require('../middlewares/checkSession');
 // Middleware responsável por verificar a sessão do usuário caso tiver logado
 const checkRelativeSession = require('../middlewares/checkRelativeSession');
 
-// Middleware responsável por verificar a sessão do usuário caso tiver logado
-const timeout = require('../middlewares/timeout');
-
 // 3 - Crie um endpoint para o cadastro de receitas
 router.post('/recipes',
     trim,
@@ -66,7 +63,6 @@ router.delete('/recipes/:id',
 
 // 9 - Crie um endpoint para a adição de uma imagem a uma receita 
 router.put('/recipes/:id/image',
-    timeout,
     checkSession,
     saveImage.single('image'),
     recipesController.uploadImage,

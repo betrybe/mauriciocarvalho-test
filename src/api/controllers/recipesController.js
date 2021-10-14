@@ -1,7 +1,5 @@
 const path = require('path');
 
-const User = require('../models/users');
-
 const recipeRepository = require('../repositories/recipeRepository');
 
 const create = async (req, res) => {
@@ -66,13 +64,8 @@ const updateById = async (req, res) => {
 const deleteById = async (req, res) => {
     try {
         const { id } = req.params; //
-        const { userId } = req;
-
-        const user = await User.findOne({ userId });
-        if (user.role === 'admin' || user.role === 'user') {
-            await recipeRepository.deleteRecipe(id); 
-            res.status(204).json({});
-        }
+        await recipeRepository.deleteRecipe(id); 
+        res.status(204).json({});
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }

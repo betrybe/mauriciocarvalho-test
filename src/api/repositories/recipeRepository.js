@@ -29,13 +29,6 @@ const getRecipeById = async (id) => {
     return recipe;
 };
 
-// const getByIdAndUserId = async (id, userId) => {
-//     const recipe = await connection().then((db) =>
-//         db.collection('recipes').findOne({ ...ObjectId(id), userId }));
-
-//     return recipe;
-// };
-
 const updateRecipe = async (recipe) => {
     const { id } = recipe;
     const findRecipe = await Recipe.findOne({ _id: database.Types.ObjectId(id) });

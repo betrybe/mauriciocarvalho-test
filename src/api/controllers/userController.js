@@ -1,17 +1,10 @@
-const User = require('../models/users');
+const userRepository = require('../repositories/userRepository');
 
 const register = async (req, res) => {
     try {
         const { user } = req;
 
-        let createdUser = await User.create(user);
-        const { name, email, role, _id } = createdUser;
-        createdUser = {
-            name,
-            email,
-            role,
-            _id,
-        };
+        const createdUser = await userRepository.createUser(user);
         res.status(201).json({ user: createdUser });
     } catch (error) {
         return res.status(500).json({ error: error.message });
@@ -24,7 +17,7 @@ const registerUserAdmin = async (req, res) => {
 
         user.role = 'admin';
 
-        let createdUser = await User.create(user);
+        let createdUser = await userRepository.createUser(user);
         const { name, email, role, _id } = createdUser;
 
         createdUser = {

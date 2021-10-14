@@ -1,14 +1,14 @@
-const User = require('../models/users');
+const userRepository = require('../repositories/userRepository');
 
 const checkUser = async (req, res, next) => {
     const { email, password } = req.body;
-    await User.find({ email, password }, (err, user) => {
-        if (err || user.length === 0) {
-            res.status(401).json({ message: 'Incorrect username or password' });
-        } else {
-            next();
-        }
-    });
+
+    const user = await userRepository.getUserByEmailPassword(email, password);
+    if (user.length === 0) {
+        res.status(401).json({ message: 'Incorrect username or password' });
+    } else {
+        next();
+    }
 };
 
 module.exports = checkUser;

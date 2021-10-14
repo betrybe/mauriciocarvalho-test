@@ -1,6 +1,7 @@
 const Recipe = require('../models/recipes');
+const validateModelSchema = require('../services/validateModelSchema');
 
-const usersSchema = (req, res, next) => {
+const usersSchema = async (req, res, next) => {
   const { name, ingredients, preparation } = req.body;
 
   const dataRecipe = {
@@ -10,32 +11,15 @@ const usersSchema = (req, res, next) => {
   };
   req.recipe = dataRecipe;
   const recipe = new Recipe(dataRecipe);
-
-  return recipe.validate((err) => {
-    if (err) {
-      const allErrors = [];
-      let valid = true;
-      const { errors } = err;
-      if (!errors) next();
-      if (errors.name) allErrors.push(errors.name);
-      if (errors.ingredients) allErrors.push(errors.ingredients);
-      if (errors.preparation) allErrors.push(errors.preparation);
-      allErrors.forEach((error) => {
-        const { properties } = error;
-        if (
-          properties.type
-          === 'required' /* || properties.type === "user defined" */
-        ) {
-          valid = false;
-        }
-      });
-
-      if (!valid) { return res.status(400).json({ message: 'Invalid entries. Try again.' }); }
+  await validateModelSchema(recipe, (valid) => {
+    if (!valid) {
+      const err = new Error('Invalid entries. Try again.');
+        err.status = 400;
+        next(err);
+    } else {
+      next();
     }
-    return next();
   });
-
-  next();
 };
 
 module.exports = usersSchema;

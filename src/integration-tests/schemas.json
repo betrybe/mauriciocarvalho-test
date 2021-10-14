@@ -138,9 +138,14 @@
         }
     },
     "recipes": {
+        "recipe": {
+            "name": "banana caramelizada",
+            "ingredients": "banana, açúcar",
+            "preparation": "coloque o açúcar na frigideira até virar caramelo e jogue a banana"
+        },
         "register": {
             "end-point": "recipes/",
-            "describe": {
+            "describe1": {
                 "description": "3 - Crie um endpoint para o cadastro de receitas",
                 "it1": {
                     "it": "Será validado que não é possível cadastrar receita sem o campo 'name'",
@@ -164,6 +169,44 @@
                     "json": {
                         "name": "Frango assado",
                         "preparation": "10 min no forno"
+                    }
+                },
+                "it4": {
+                    "it": "Será validado que não é possível cadastrar uma receita com token invalido",
+                    "token": "6437658488",
+                    "response": "jwt malformed",
+                    "json": {
+                        "name": "Frango assado",
+                        "ingredients": "Frango",
+                        "preparation": "10 min no forno"
+                    }
+                },
+                "it5": {
+                    "it": "Será validado que é possível cadastrar uma receita com sucesso",
+                    "response": {
+                        "recipe": {
+                            "name": "Frango assado",
+                            "ingredients": "Frango",
+                            "preparation": "10 min no forno",
+                            "_id": "...",
+                            "userId": "..."
+                        }
+                    },
+                    "json": {
+                        "name": "Frango assado",
+                        "ingredients": "Frango",
+                        "preparation": "10 min no forno"
+                    }
+                }
+            },
+            "describe2": {
+                "description": "4 - Crie um endpoint para a listagem de receitas",
+                "it1": {
+                    "it": "Será validado que é possível listar todas as receitas sem estar autenticado",
+                    "response": {
+                        "name": "banana caramelizada",
+                        "ingredients": "banana, açúcar",
+                        "preparation": "coloque o açúcar na frigideira até virar caramelo e jogue a banana"
                     }
                 }
             }

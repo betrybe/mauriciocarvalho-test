@@ -10,7 +10,7 @@ const Recipe = require('../api/models/recipes');
 chai.use(chaiHttp);
 chai.should();
 
-describe(RECIPES.register.describe.description, () => {
+describe(RECIPES.register.describe1.description, () => {
 
     beforeEach(async () => {
         await User.deleteMany({});
@@ -21,7 +21,7 @@ describe(RECIPES.register.describe.description, () => {
         await User.create(user);
     })
 
-    it(RECIPES.register.describe.it1.it, done => {
+    it(RECIPES.register.describe1.it1.it, done => {
         chai.request(SERVER)
             .post(USERS.login['end-point'])
             .send(USERS.login.describe.it5.json)
@@ -29,18 +29,18 @@ describe(RECIPES.register.describe.description, () => {
                 chai.request(SERVER)
                     .post(RECIPES.register['end-point'])
                     .set('Authorization', res.body.token)
-                    .send(RECIPES.register.describe.it1.json)
+                    .send(RECIPES.register.describe1.it1.json)
                     .end((err, res) => {
                         // console.log(res)
                         chai.assert.isNull(err);
                         chai.assert.isNotEmpty(res.body);
                         res.should.have.status(400);
-                        res.body.should.have.property('message').equal(RECIPES.register.describe.it1.response);
+                        res.body.should.have.property('message').equal(RECIPES.register.describe1.it1.response);
                         done();
                     });
             });
     });
-    it(RECIPES.register.describe.it2.it, done => {
+    it(RECIPES.register.describe1.it2.it, done => {
         chai.request(SERVER)
             .post(USERS.login['end-point'])
             .send(USERS.login.describe.it5.json)
@@ -48,17 +48,17 @@ describe(RECIPES.register.describe.description, () => {
                 chai.request(SERVER)
                     .post(RECIPES.register['end-point'])
                     .set('Authorization', res.body.token)
-                    .send(RECIPES.register.describe.it2.json)
+                    .send(RECIPES.register.describe1.it2.json)
                     .end((err, res) => {
                         chai.assert.isNull(err);
                         chai.assert.isNotEmpty(res.body);
                         res.should.have.status(400);
-                        res.body.should.have.property('message').equal(RECIPES.register.describe.it2.response);
+                        res.body.should.have.property('message').equal(RECIPES.register.describe1.it2.response);
                         done();
                     });
             });
     });
-    it(RECIPES.register.describe.it3.it, done => {
+    it(RECIPES.register.describe1.it3.it, done => {
         chai.request(SERVER)
             .post(USERS.login['end-point'])
             .send(USERS.login.describe.it5.json)
@@ -66,97 +66,144 @@ describe(RECIPES.register.describe.description, () => {
                 chai.request(SERVER)
                     .post(RECIPES.register['end-point'])
                     .set('Authorization', res.body.token)
-                    .send(RECIPES.register.describe.it3.json)
+                    .send(RECIPES.register.describe1.it3.json)
                     .end((err, res) => {
                         chai.assert.isNull(err);
                         chai.assert.isNotEmpty(res.body);
                         res.should.have.status(400);
-                        res.body.should.have.property('message').equal(RECIPES.register.describe.it3.response);
+                        res.body.should.have.property('message').equal(RECIPES.register.describe1.it3.response);
                         done();
                     });
             });
     });
-    // it(RECIPES.register.describe.it2.it, done => {
+    it(RECIPES.register.describe1.it4.it, done => {
+        chai.request(SERVER)
+            .post(RECIPES.register['end-point'])
+            .set('Authorization', RECIPES.register.describe1.it4.token)
+            .send(RECIPES.register.describe1.it4.json)
+            .end((err, res) => {
+                chai.assert.isNull(err);
+                chai.assert.isNotEmpty(res.body);
+                res.should.have.status(401);
+                res.body.should.have.property('message').equal(RECIPES.register.describe1.it4.response);
+                done();
+            });
+    });
+    it(RECIPES.register.describe1.it5.it, done => {
+        chai.request(SERVER)
+            .post(USERS.login['end-point'])
+            .send(USERS.login.describe.it5.json)
+            .end((err, res) => {
+                chai.request(SERVER)
+                    .post(RECIPES.register['end-point'])
+                    .set('Authorization', res.body.token)
+                    .send(RECIPES.register.describe1.it5.json)
+                    .end((err, res) => {
+                        chai.assert.isNull(err);
+                        chai.assert.isNotEmpty(res.body);
+                        res.body.recipe.should.have.property('_id')
+                        res.body.recipe.should.have.property('name').equal(RECIPES.register.describe1.it5.response.recipe.name);
+                        res.body.recipe.should.have.property('ingredients').equal(RECIPES.register.describe1.it5.response.recipe.ingredients);
+                        res.body.recipe.should.have.property('preparation').equal(RECIPES.register.describe1.it5.response.recipe.preparation);
+                        done();
+                    });
+            });
+    });
+});
+
+describe(RECIPES.register.describe2.description, () => {
+
+    beforeEach(async () => {
+        await User.deleteMany({});
+        await Recipe.deleteMany({});
+        const admin = USERS.admin
+        await User.create(admin);
+        const user = USERS.user
+        await User.create(user);
+        const recipe = RECIPES.recipe;
+        await Recipe.create(recipe);
+    })
+
+    it(RECIPES.register.describe2.it1.it, done => {
+        chai.request(SERVER)
+            .get(RECIPES.register['end-point'])
+            .end((err, res) => {
+                chai.assert.isNull(err);
+                chai.assert.isNotEmpty(res.body);
+                res.should.have.status(200);
+                res.body[0].should.have.property('name').equal(RECIPES.recipe.name);
+                res.body[0].should.have.property('ingredients').equal(RECIPES.recipe.ingredients);
+                res.body[0].should.have.property('preparation').equal(RECIPES.recipe.preparation);
+                done();
+            });
+    });
+    // it(RECIPES.register.describe1.it2.it, done => {
+    //     chai.request(SERVER)
+    //         .post(USERS.login['end-point'])
+    //         .send(USERS.login.describe1.it5.json)
+    //         .end((err, res) => {
+    //             chai.request(SERVER)
+    //                 .post(RECIPES.register['end-point'])
+    //                 .set('Authorization', res.body.token)
+    //                 .send(RECIPES.register.describe1.it2.json)
+    //                 .end((err, res) => {
+    //                     chai.assert.isNull(err);
+    //                     chai.assert.isNotEmpty(res.body);
+    //                     res.should.have.status(400);
+    //                     res.body.should.have.property('message').equal(RECIPES.register.describe1.it2.response);
+    //                     done();
+    //                 });
+    //         });
+    // });
+    // it(RECIPES.register.describe1.it3.it, done => {
+    //     chai.request(SERVER)
+    //         .post(USERS.login['end-point'])
+    //         .send(USERS.login.describe1.it5.json)
+    //         .end((err, res) => {
+    //             chai.request(SERVER)
+    //                 .post(RECIPES.register['end-point'])
+    //                 .set('Authorization', res.body.token)
+    //                 .send(RECIPES.register.describe1.it3.json)
+    //                 .end((err, res) => {
+    //                     chai.assert.isNull(err);
+    //                     chai.assert.isNotEmpty(res.body);
+    //                     res.should.have.status(400);
+    //                     res.body.should.have.property('message').equal(RECIPES.register.describe1.it3.response);
+    //                     done();
+    //                 });
+    //         });
+    // });
+    // it(RECIPES.register.describe1.it4.it, done => {
     //     chai.request(SERVER)
     //         .post(RECIPES.register['end-point'])
-    //         .send(RECIPES.register.describe.it2.json)
+    //         .set('Authorization', RECIPES.register.describe1.it4.token)
+    //         .send(RECIPES.register.describe1.it4.json)
     //         .end((err, res) => {
     //             chai.assert.isNull(err);
     //             chai.assert.isNotEmpty(res.body);
-    //             res.should.have.status(400);
-    //             res.body.should.have.property('message').equal(RECIPES.register.describe.it2.response);
+    //             res.should.have.status(401);
+    //             res.body.should.have.property('message').equal(RECIPES.register.describe1.it4.response);
     //             done();
     //         });
     // });
-    // it(RECIPES.register.describe.it3.it, done => {
+    // it(RECIPES.register.describe1.it5.it, done => {
     //     chai.request(SERVER)
-    //         .post(RECIPES.register['end-point'])
-    //         .send(RECIPES.register.describe.it3.json)
+    //         .post(USERS.login['end-point'])
+    //         .send(USERS.login.describe1.it5.json)
     //         .end((err, res) => {
-    //             chai.assert.isNull(err);
-    //             chai.assert.isNotEmpty(res.body);
-    //             res.should.have.status(400);
-    //             res.body.should.have.property('message').equal(RECIPES.register.describe.it3.response);
-    //             done();
-    //         });
-    // });
-    // it(RECIPES.register.describe.it4.it, done => {
-    //     chai.request(SERVER)
-    //         .post(RECIPES.register['end-point'])
-    //         .send(RECIPES.register.describe.it4.json)
-    //         .end((err, res) => {
-    //             chai.assert.isNull(err);
-    //             chai.assert.isNotEmpty(res.body);
-    //             res.should.have.status(400);
-    //             res.body.should.have.property('message').equal(RECIPES.register.describe.it4.response);
-    //             done();
-    //         });
-    // });
-    // describe(RECIPES.register.describe.it5.it, () => {
-    //     beforeEach(async () => {
-    //         const user = RECIPES.user
-    //         await User.create(user);
-    //     })
-    //     it(RECIPES.register.describe.it5.it, done => {
-    //         chai.request(SERVER)
-    //             .post(RECIPES.register['end-point'])
-    //             .send(RECIPES.register.describe.it5.json)
-    //             .end((err, res) => {
-    //                 chai.assert.isNull(err);
-    //                 chai.assert.isNotEmpty(res.body);
-    //                 res.should.have.status(409);
-    //                 res.body.should.have.property('message').equal(RECIPES.register.describe.it5.response);
-    //                 done();
-    //             });
-    //     });
-    // });
-    // it(RECIPES.register.describe.it6.it, done => {
-    //     chai.request(SERVER)
-    //         .post(RECIPES.register['end-point'])
-    //         .send(RECIPES.register.describe.it6.json)
-    //         .end((err, res) => {
-    //             chai.assert.isNull(err);
-    //             chai.assert.isNotEmpty(res.body);
-    //             res.should.have.status(201);
-    //             res.body.user.should.have.property('name').equal(RECIPES.register.describe.it6.response.user.name);
-    //             res.body.user.should.have.property('email').equal(RECIPES.register.describe.it6.response.user.email);
-    //             res.body.should.to.not.have.property('password')
-    //             done();
-    //         });
-    // });
-    // it(RECIPES.register.describe.it7.it, done => {
-    //     chai.request(SERVER)
-    //         .post(RECIPES.register['end-point'])
-    //         .send(RECIPES.register.describe.it7.json)
-    //         .end((err, res) => {
-    //             chai.assert.isNull(err);
-    //             chai.assert.isNotEmpty(res.body);
-    //             res.should.have.status(201);
-    //             res.body.user.should.have.property('name').equal(RECIPES.register.describe.it7.response.user.name);
-    //             res.body.user.should.have.property('email').equal(RECIPES.register.describe.it7.response.user.email);
-    //             res.body.user.should.have.property('role').equal(RECIPES.register.describe.it7.response.user.role);
-    //             res.body.should.to.not.have.property('password')
-    //             done();
+    //             chai.request(SERVER)
+    //                 .post(RECIPES.register['end-point'])
+    //                 .set('Authorization', res.body.token)
+    //                 .send(RECIPES.register.describe1.it5.json)
+    //                 .end((err, res) => {
+    //                     chai.assert.isNull(err);
+    //                     chai.assert.isNotEmpty(res.body);
+    //                     res.body.recipe.should.have.property('_id')
+    //                     res.body.recipe.should.have.property('name').equal(RECIPES.register.describe1.it5.response.recipe.name);
+    //                     res.body.recipe.should.have.property('ingredients').equal(RECIPES.register.describe1.it5.response.recipe.ingredients);
+    //                     res.body.recipe.should.have.property('preparation').equal(RECIPES.register.describe1.it5.response.recipe.preparation);
+    //                     done();
+    //                 });
     //         });
     // });
 });

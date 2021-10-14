@@ -1,27 +1,22 @@
-const jwt = require("jsonwebtoken");
-
+const jwt = require('jsonwebtoken');
 
 const checkRelativeSession = (req, res, next) => {
-
     const { authorization } = req.headers;
 
     if (authorization) {
-        return jwt.verify(authorization, "BeTrybe", function (err, decoded) {
-
-            if (err) {
-                var err = new Error(err.message);
+        return jwt.verify(authorization, 'BeTrybe', (error, decoded) => {
+            if (error) {
+                const err = new Error(error.message);
                 err.status = 401;
-                return next(err)
+                return next(err);
             }
 
-            req.userId = decoded._id;
-
-            return next();
-
+            const { _id } = decoded;
+            req.userId = _id;
+            next();
         });
-    } else {
-        return next();
     }
-}
+    return next();
+};
 
 module.exports = checkRelativeSession;

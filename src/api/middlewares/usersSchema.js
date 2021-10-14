@@ -1,48 +1,41 @@
-
-const { request } = require('../app');
-const User = require('../models/users')
+const User = require('../models/users');
 
 const usersSchema = (req, res, next) => {
+    const { name, email, password } = req.body;
+    let { role } = req.body;
 
-    let { name, email, password, role } = req.body;
-
-    if (!role) role = "user";
+    if (!role) role = 'user';
 
     const dataUser = {
         name,
         email,
         password,
-        role
-    }
+        role,
+    };
     req.user = dataUser;
     const user = new User(dataUser);
 
     return user.validate((err) => {
         if (err) {
-            const allErrors = []
+            const allErrors = [];
             let valid = true;
             const { errors } = err;
             if (!errors) next();
-            if (errors.name) allErrors.push(errors.name)
-            if (errors.email) allErrors.push(errors.email)
-            if (errors.password) allErrors.push(errors.password)
+            if (errors.name) allErrors.push(errors.name);
+            if (errors.email) allErrors.push(errors.email);
+            if (errors.password) allErrors.push(errors.password);
 
-            allErrors.forEach(err => {
-                const { properties } = err;
-                if (properties.type === "required" || properties.type === "user defined") {
+            allErrors.forEach((error) => {
+                const { properties } = error;
+                if (properties.type === 'required' || properties.type === 'user defined') {
                     valid = false;
                 }
+            });
 
-            })
-
-            if (!valid) return res.status(400).json({ message: "Invalid entries. Try again." });
+            if (!valid) return res.status(400).json({ message: 'Invalid entries. Try again.' });
         }
         return next();
     });
-
-
-
-
-}
+};
 
 module.exports = usersSchema;

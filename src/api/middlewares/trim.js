@@ -1,22 +1,17 @@
-
 const trim = (req, res, next) => {
-
     try {
       const exceptions = ['password']; 
 
-      Object.keys(req.body).forEach(key => {
-          if(!exceptions.includes(key) && typeof req.body[key] === "string") {
+      Object.keys(req.body).forEach((key) => {
+          if (!exceptions.includes(key) && typeof req.body[key] === 'string') {
             req.body[key] = req.body[key].trim();
           } 
-      })
+      });
   
-      return next(); 
-  
+      return next();
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  }
+  };
   
-  module.exports = trim
-  
-  
+  module.exports = trim;

@@ -2,24 +2,26 @@ const database = require('../database/connect');
 const util = require('../util/functions'); 
 
 const User = database.model('users', {
+    _id: {
+        type: database.Schema.Types.ObjectId, auto: true,
+    },
     name: {
         type: String,
-        required: true
+        required: true,
     },
     email: {
         type: String,
         required: true,
-        validate: [util.validateEmail, 'Invalid entries. Try again.']
+        validate: [util.validateEmail, 'Invalid entries. Try again.'],
     },
     password: {
         type: String,
-        required: true
+        required: true,
     },
     role: {
         type: String,
-        required: false
-    }
-})
-
+        required: false,
+    },
+});
 
 module.exports = User;

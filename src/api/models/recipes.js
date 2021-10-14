@@ -1,29 +1,27 @@
 const database = require('../database/connect');
-const util = require('../util/functions'); 
 
 const Recipes = database.model('recipes', {
     name: {
         type: String,
-        required: true
+        required: true,
     },
     ingredients: {
         type: String,
-        required: true
+        required: true,
     },
     preparation: {
         type: String,
-        required: true
+        required: true,
     },
     userId: {
         type: String,
-        required: false
+        required: false,
     },
     image: {
         type: String,
-        required: false
-    }
+        required: false,
+    },
 
-})
-
+});
 
 module.exports = Recipes;

@@ -136,5 +136,74 @@
                 }
             }
         }
+    },
+    "recipes": {
+        "register": {
+            "end-point": "recipes/",
+            "describe": {
+                "description": "3 - Crie um endpoint para o cadastro de receitas",
+                "it1": {
+                    "it": "Será validado que não é possível cadastrar receita sem o campo 'name'",
+                    "response": "Invalid entries. Try again.",
+                    "json": {
+                        "ingredients": "Frango",
+                        "preparation": "10 min no forno"
+                    }
+                },
+                "it2": {
+                    "it": "Será validado que não é possível cadastrar receita sem o campo 'preparation'",
+                    "response": "Invalid entries. Try again.",
+                    "json": {
+                        "name": "Frango assado",
+                        "ingredients": "Frango"
+                    }
+                },
+                "it3": {
+                    "it": "Será validado que não é possível cadastrar receita sem o campo 'ingredients'",
+                    "response": "Invalid entries. Try again.",
+                    "json": {
+                        "name": "Frango assado",
+                        "preparation": "10 min no forno"
+                    }
+                }
+            }
+        }
+    },
+    "util": {
+        "functions": {
+            "describe": {
+                "description": "Test Function validateEmail",
+                "it1": {
+                    "it": "Será validado que um email inválido retorna false",
+                    "return": false,
+                    "params": {
+                        "email": "erickjacquingmail.com"
+                    }
+                }
+            }
+        }
+    },
+    "controllers": {
+        "userController": {
+            "describe": {
+                "description": "Test Function register",
+                "it1": {
+                    "it": "Será validado que é possível cadastrar usuário com sucesso",
+                    "response": {
+                        "user": {
+                            "name": "Erick Jacquin",
+                            "email": "erickjacquin@gmail.com",
+                            "role": "user",
+                            "_id": "..."
+                        }
+                    },
+                    "json": {
+                        "name": "Erick Jacquin",
+                        "email": "erickjacquin@gmail.com",
+                        "password": "12345678"
+                    }
+                }
+            }
+        }
     }
 }

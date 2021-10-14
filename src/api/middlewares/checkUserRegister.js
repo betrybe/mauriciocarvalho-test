@@ -1,17 +1,15 @@
+const User = require('../models/users');
 
-const User = require('../models/users')
-
-const checkUserRegister = (req, res, next) => {
+const checkUserRegister = async (req, res, next) => {
     const { email } = req.body;
 
-    const userExists = User.find({email: email}, (err, user) => {
-        if(err || user.length > 0){
-            res.status(409).json({message: "Email already registered"}); 
-        }else{
-            next(); 
+    await User.find({ email }, (error, user) => {
+        if (error || user.length > 0) {
+            res.status(409).json({ message: 'Email already registered' });
+        } else {
+            next();
         }
     });
-
-}
+};
 
 module.exports = checkUserRegister;
